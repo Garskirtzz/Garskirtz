@@ -1,5 +1,5 @@
 -- ==========================================
--- [MASTER BOOTSTRAPPER] SCRIPT JADUL GACOR + UI SULTAN (FIX FLOATING & TITLE) 🔥
+-- [MASTER BOOTSTRAPPER] SCRIPT JADUL GACOR + UI SULTAN (FULL AUTO 24/7) 🔥
 -- ==========================================
 task.spawn(function()
     -- Looping aman biar eksekutor gak nge-hang
@@ -25,6 +25,7 @@ task.spawn(function()
     local TeleportService = game:GetService("TeleportService")
     local UserInputService = game:GetService("UserInputService")
     local TweenService = game:GetService("TweenService")
+    local Lighting = game:GetService("Lighting")
 
     local jobEvents = ReplicatedStorage:WaitForChild("JobEvents", 999)
     local computersFolder = Workspace:WaitForChild("Computers", 999)
@@ -73,10 +74,9 @@ task.spawn(function()
     ScreenGui.Name = guiName
     ScreenGui.Parent = safeGuiParent
 
-    -- Kotak Utama
     local MainFrame = Instance.new("Frame")
-    MainFrame.Size = UDim2.new(0, 240, 0, 145) 
-    MainFrame.Position = UDim2.new(0.5, -120, 0.5, -72)
+    MainFrame.Size = UDim2.new(0, 240, 0, 185) 
+    MainFrame.Position = UDim2.new(0.5, -120, 0.5, -92)
     MainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 30)
     MainFrame.BorderSizePixel = 0
     MainFrame.Parent = ScreenGui
@@ -87,7 +87,6 @@ task.spawn(function()
     UICorner.CornerRadius = UDim.new(0, 8)
     UICorner.Parent = MainFrame
 
-    -- Wadah Header Terpisah (Biar backgroundnya cakep)
     local HeaderFrame = Instance.new("Frame")
     HeaderFrame.Size = UDim2.new(1, 0, 0, 40)
     HeaderFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
@@ -98,7 +97,6 @@ task.spawn(function()
     HeaderCorner.CornerRadius = UDim.new(0, 8)
     HeaderCorner.Parent = HeaderFrame
     
-    -- Nambal lengkungan bawah header
     local HeaderCover = Instance.new("Frame")
     HeaderCover.Size = UDim2.new(1, 0, 0, 10)
     HeaderCover.Position = UDim2.new(0, 0, 1, -10)
@@ -106,7 +104,6 @@ task.spawn(function()
     HeaderCover.BorderSizePixel = 0
     HeaderCover.Parent = HeaderFrame
 
-    -- FIX JUDUL KEPOTONG
     local Title = Instance.new("TextLabel")
     Title.Size = UDim2.new(1, -45, 1, 0) 
     Title.Position = UDim2.new(0, 15, 0, 2) 
@@ -125,7 +122,6 @@ task.spawn(function()
     Divider.BorderSizePixel = 0
     Divider.Parent = MainFrame
 
-    -- TOMBOL MINIMIZE "-"
     local MinimizeBtn = Instance.new("TextButton")
     MinimizeBtn.Size = UDim2.new(0, 24, 0, 24)
     MinimizeBtn.Position = UDim2.new(1, -34, 0.5, -12)
@@ -157,10 +153,8 @@ task.spawn(function()
 
     local BtnAutoFarm = createButton(55, "START AUTO FARM : OFF")
     local BtnAntiAFK = createButton(95, "AUTO RECONNECT : OFF")
+    local BtnPotatoMode = createButton(135, "ULTIMATE AFK (POTATO)") 
 
-    -- ==========================================
-    -- FUNGSI DRAGGABLE MULUS (Anti Patah-Patah) 🔥
-    -- ==========================================
     local function MakeDraggable(guiObject)
         local dragging, dragInput, dragStart, startPos
         guiObject.InputBegan:Connect(function(input)
@@ -180,23 +174,20 @@ task.spawn(function()
         end)
     end
 
-    MakeDraggable(MainFrame) -- Terapin drag mulus ke UI Utama
+    MakeDraggable(MainFrame) 
 
-    -- ==========================================
-    -- TOMBOL FLOATING (PERSEGI TUMPUL & GEDE) 🔥
-    -- ==========================================
     local FloatingIcon = Instance.new("ImageButton")
-    FloatingIcon.Size = UDim2.new(0, 65, 0, 65) -- UKURAN GEDE KEK KEMAREN
+    FloatingIcon.Size = UDim2.new(0, 65, 0, 65) 
     FloatingIcon.Position = UDim2.new(0, 20, 0, 20)
     FloatingIcon.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
     FloatingIcon.AnchorPoint = Vector2.new(0.5, 0.5)
     FloatingIcon.Visible = false
     FloatingIcon.Active = true
-    FloatingIcon.Image = "rbxassetid://127995701456737" -- MASUKIN ID GAMBAR LU DISINI
+    FloatingIcon.Image = "rbxassetid://127995701456737" 
     FloatingIcon.Parent = ScreenGui
 
     local FloatCorner = Instance.new("UICorner")
-    FloatCorner.CornerRadius = UDim.new(0, 12) -- BENTUK PERSEGI TUMPUL (SQUIRCLE)
+    FloatCorner.CornerRadius = UDim.new(0, 12) 
     FloatCorner.Parent = FloatingIcon
     
     local FloatStroke = Instance.new("UIStroke")
@@ -204,9 +195,8 @@ task.spawn(function()
     FloatStroke.Thickness = 2
     FloatStroke.Parent = FloatingIcon
 
-    MakeDraggable(FloatingIcon) -- Terapin drag mulus ke Tombol Floating
+    MakeDraggable(FloatingIcon) 
 
-    -- LOGIKA MINIMIZE (ANIMASI TWEEN MULUS)
     MinimizeBtn.MouseButton1Click:Connect(function()
         local closeTween = TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.In), {Size = UDim2.new(0, 0, 0, 0)})
         closeTween:Play()
@@ -225,12 +215,9 @@ task.spawn(function()
         FloatingIcon.Visible = false
         
         MainFrame.Visible = true
-        TweenService:Create(MainFrame, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {Size = UDim2.new(0, 240, 0, 145)}):Play()
+        TweenService:Create(MainFrame, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {Size = UDim2.new(0, 240, 0, 185)}):Play()
     end)
 
-    -- ==========================================
-    -- LOGIKA TOMBOL (MURNI PUNYA LU 100%)
-    -- ==========================================
     local function toggleAutoFarm(forceState)
         if forceState ~= nil then autoFarmEnabled = forceState else autoFarmEnabled = not autoFarmEnabled end
         if autoFarmEnabled then
@@ -292,16 +279,130 @@ task.spawn(function()
     BtnAntiAFK.MouseButton1Click:Connect(function() toggleAntiAFK() end)
 
     -- ==========================================
-    -- [LAPIS 4] AUTO-LOBBY BYPASS (MURNI PUNYA LU!)
+    -- ⬛ FUNGSI ULTIMATE AFK (POTATO MODE) ⬛
+    -- ==========================================
+    local isPotatoModeActive = false
+    local function AktifinPotatoMode()
+        if isPotatoModeActive then return end 
+        isPotatoModeActive = true
+        
+        BtnPotatoMode.Text = "POTATO MODE : AKTIF ⬛"
+        BtnPotatoMode.BackgroundColor3 = Color3.fromRGB(150, 150, 40)
+
+        settings().Rendering.QualityLevel = Enum.QualityLevel.Level01
+        Lighting.GlobalShadows = false
+        Lighting.Brightness = 0
+        Lighting.FogEnd = 9e9
+        for _, obj in pairs(Lighting:GetChildren()) do obj:Destroy() end
+
+        local safeFolders = {}
+        if Workspace:FindFirstChild("Computers") then table.insert(safeFolders, Workspace.Computers) end
+        if Workspace:FindFirstChild("BUILDING_FAROKA") then table.insert(safeFolders, Workspace.BUILDING_FAROKA) end
+
+        local function bersihkanObjek(obj)
+            local isSafe = false
+            local isPlayer = false
+
+            if obj:FindFirstAncestorOfClass("Model") and Players:GetPlayerFromCharacter(obj:FindFirstAncestorOfClass("Model")) then
+                isSafe = true; isPlayer = true
+            elseif obj:IsA("Model") and Players:GetPlayerFromCharacter(obj) then
+                isSafe = true; isPlayer = true
+            end
+
+            if obj:IsA("Terrain") or obj:IsA("Camera") then isSafe = true end
+
+            if not isSafe then
+                for _, folder in pairs(safeFolders) do
+                    if obj == folder or obj:IsDescendantOf(folder) then
+                        isSafe = true; break
+                    end
+                end
+            end
+
+            if not isSafe then
+                pcall(function() obj:Destroy() end)
+            else
+                pcall(function()
+                    if obj:IsA("BasePart") or obj:IsA("MeshPart") then
+                        obj.Material = Enum.Material.SmoothPlastic
+                        obj.CastShadow = false
+                        obj.Reflectance = 0
+                        if not isPlayer then obj.Color = Color3.fromRGB(150, 150, 150) end 
+                    elseif obj:IsA("Decal") or obj:IsA("Texture") or obj:IsA("SurfaceAppearance") then
+                        obj:Destroy() 
+                    elseif isPlayer and (obj:IsA("Accessory") or obj:IsA("Shirt") or obj:IsA("Pants") or obj:IsA("ShirtGraphic") or obj:IsA("CharacterMesh")) then
+                        obj:Destroy() 
+                    end
+                end)
+            end
+        end
+
+        for _, obj in pairs(Workspace:GetDescendants()) do bersihkanObjek(obj) end
+        for _, p in pairs(Players:GetPlayers()) do 
+            if p.Character then for _, acc in pairs(p.Character:GetDescendants()) do bersihkanObjek(acc) end end
+        end
+
+        Workspace.DescendantAdded:Connect(function(obj)
+            task.wait(0.1)
+            bersihkanObjek(obj)
+        end)
+
+        local BlackScreen = Instance.new("Frame")
+        BlackScreen.Size = UDim2.new(10, 0, 10, 0)
+        BlackScreen.Position = UDim2.new(-5, 0, -5, 0)
+        BlackScreen.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+        BlackScreen.ZIndex = 9999
+        BlackScreen.Parent = ScreenGui
+        
+        local AfkText = Instance.new("TextLabel")
+        AfkText.Size = UDim2.new(0, 400, 0, 50)
+        AfkText.Position = UDim2.new(0.5, -200, 0.5, -50)
+        AfkText.BackgroundTransparency = 1
+        AfkText.Text = "💤 DDS HUB AFK MODE 💤\n(Biarkan Layar Hitam Biar Batre Irit)"
+        AfkText.TextColor3 = Color3.fromRGB(0, 255, 0)
+        AfkText.Font = Enum.Font.GothamBold
+        AfkText.TextSize = 18
+        AfkText.ZIndex = 10000
+        AfkText.Parent = ScreenGui
+
+        local ToggleBtn = Instance.new("TextButton")
+        ToggleBtn.Size = UDim2.new(0, 150, 0, 40)
+        ToggleBtn.Position = UDim2.new(0.5, -75, 0.5, 20)
+        ToggleBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+        ToggleBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+        ToggleBtn.Text = "Buka Layar 👀"
+        ToggleBtn.Font = Enum.Font.GothamBold
+        ToggleBtn.TextSize = 14
+        ToggleBtn.ZIndex = 10000
+        ToggleBtn.Parent = ScreenGui
+
+        local isBlack = true
+        ToggleBtn.MouseButton1Click:Connect(function()
+            isBlack = not isBlack
+            if isBlack then
+                BlackScreen.BackgroundTransparency = 0
+                AfkText.TextTransparency = 0
+                ToggleBtn.Text = "Buka Layar 👀"
+            else
+                BlackScreen.BackgroundTransparency = 1 
+                AfkText.TextTransparency = 1
+                ToggleBtn.Text = "Tutup Layar ⬛"
+            end
+        end)
+    end
+    
+    BtnPotatoMode.MouseButton1Click:Connect(AktifinPotatoMode)
+
+    -- ==========================================
+    -- [LAPIS 4] AUTO-LOBBY BYPASS (OTOMATIS AFK + POTATO AMAN) 🔥
     -- ==========================================
     task.spawn(function()
         local mainMenu = PlayerGui:WaitForChild("mainMenuSystem", 999)
         
-        -- Kita pantau terus layarnya. Begitu UI menu muncul, sikat!
         while task.wait(1) do
             if mainMenu and mainMenu.Enabled then
                 print("[AutoFarm] 🏠 Menu Terdeteksi. Menembak Remote Bypass...")
-                task.wait(4) -- Jeda santai biar gamenya ngerender UI dulu
+                task.wait(4) 
                 
                 pcall(function()
                     local teamRemote = jobEvents:WaitForChild("TeamChangeRequest", 10)
@@ -322,10 +423,26 @@ task.spawn(function()
                 
                 task.wait(3)
                 
-                -- LANGSUNG NYALAKAN FITUR!
+                -- NYALAIN FARM & ANTI-AFK DULU BIAR JALAN KE MEJA
                 toggleAutoFarm(true)
                 toggleAntiAFK(true)
-                break -- Keluar dari loop bypass
+                
+                -- ==========================================
+                -- 📡 RADAR ANTI-VOID: TUNGGU SAMPE DUDUK DI KURSI
+                -- ==========================================
+                print("[AutoFarm] 📡 Menunggu karakter jalan dan duduk di kursi...")
+                
+                repeat
+                    task.wait(1)
+                    local char = player.Character
+                    local humanoid = char and char:FindFirstChild("Humanoid")
+                until humanoid and humanoid.Sit == true
+                
+                print("[AutoFarm] 📍 Pantat udah nempel di kursi! Eksekusi Potato Mode...")
+                task.wait(1) -- Kasih nafas 1 detik pas baru duduk
+                AktifinPotatoMode() -- BAM! MAP LANGSUNG RATA & LAYAR ITEM!
+                
+                break 
             end
         end
     end)
@@ -346,9 +463,7 @@ task.spawn(function()
             AgentCanJump = false 
         })
 
-        pcall(function()
-            path:ComputeAsync(rootPart.Position, targetPosition)
-        end)
+        pcall(function() path:ComputeAsync(rootPart.Position, targetPosition) end)
 
         if path.Status == Enum.PathStatus.Success then
             local waypoints = path:GetWaypoints()
